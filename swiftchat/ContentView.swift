@@ -19,7 +19,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             VStack{
-               ChatHeader(name: authViewModel.userModel.name)
+               ChatHeader(authViewModel: authViewModel)
                 ScrollViewReader { proxy in
                     ScrollView {
                         ForEach(messages,id: \.self) { message in

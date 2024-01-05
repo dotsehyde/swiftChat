@@ -11,7 +11,9 @@ struct AuthView: View {
     @State var email:String = ""
     @State var password:String=""
     @State var name:String=""
+    @State private var showAlert = false
     @State var isLogin = true
+    @State private var isSecure: Bool = true
     @State var showPassword = false
     @ObservedObject var authViewModel: AuthViewModel
     var body: some View {
@@ -29,6 +31,7 @@ struct AuthView: View {
                     Image(systemName: "person")
                         .foregroundStyle(.gray)
                     TextField("Name", text: $name)
+                        .textInputAutocapitalization(.never)
                 }
                 .padding()
                 .overlay(content: {
@@ -44,6 +47,8 @@ struct AuthView: View {
                 Image(systemName: "envelope")
                     .foregroundStyle(.gray)
                 TextField("Email Address", text: $email)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.emailAddress)
             }
             .padding()
             .overlay(content: {
@@ -56,9 +61,22 @@ struct AuthView: View {
             HStack(spacing: 5){
                 Image(systemName: "lock.fill")
                     .foregroundStyle(.gray)
-                SecureField("Password", text: $password)
+                if isSecure{
+                    SecureField("Password", text: $password)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.alphabet)
+                }else{
+                    TextField("Password", text: $password)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.alphabet)
+                }
                 Image(systemName: "eye")
                     .foregroundStyle(.gray)
+                    .onTapGesture {
+                        withAnimation {
+                            isSecure.toggle()
+                        }
+                    }
             }
             .padding()
             .overlay(content: {
@@ -98,11 +116,16 @@ struct AuthView: View {
         .onChange(of: authViewModel.state) { newValue in
             if newValue == .error {
                 // show errorDialog
-                print("Auth Error")
-            }else if newValue == .success{
-                //Navigate to homescreen
-                print("Auth Success")
+                showAlert = true
             }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Authentication Error"),
+                  message: Text(authViewModel.errMsg),
+                  dismissButton: .default(Text("OK"),action: {
+                showAlert = false
+            })
+            )
         }
     }
 }

@@ -19,10 +19,12 @@ struct swiftchatApp: App {
     @StateObject var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            if authViewModel.isLoggedin {
-                ContentView(authViewModel: authViewModel)
-            }else{
-                AuthView(authViewModel: authViewModel)
+            NavigationStack{
+                if authViewModel.isLoggedin {
+                    ContentView(authViewModel: authViewModel)
+                }else{
+                    AuthView(authViewModel: authViewModel)
+                }
             }
         }
     }

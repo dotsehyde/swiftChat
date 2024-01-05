@@ -35,7 +35,7 @@ class AuthViewModel: ObservableObject {
             if let user = Auth.auth().currentUser {
                 userModel = UserModel(id: user.uid, name: user.displayName ?? "N/A", email: user.email ?? "")
             }
-           
+            
         } else {
             self.isLoggedin = false
         }
@@ -55,7 +55,8 @@ class AuthViewModel: ObservableObject {
                 self.userModel = UserModel(id: user.uid,
                                            name: user.displayName ?? "",
                                            email: user.email ?? "")
-                self.state = .success
+                self.state = .initial
+                self.isLoggedin = true
             }
         }
     }
@@ -67,22 +68,31 @@ class AuthViewModel: ObservableObject {
             if err != nil {
                 self.state = .error
                 self.errMsg = err?.localizedDescription ?? "Something went wronng"
-                print("Login Error: \(String(describing: err?.localizedDescription))")
             }
             if let user = auth?.user {
-               let changeReq = user.createProfileChangeRequest()
+                let changeReq = user.createProfileChangeRequest()
                 changeReq.displayName = name
                 changeReq.commitChanges(){ err in
                     
                     self.userModel = UserModel(id: user.uid,
                                                name: name,
                                                email: user.email ?? "")
-                    self.state = .success
+                    self.state = .initial
+                    self.isLoggedin = true
                 }
-               
+                
             }
         }
     }
     
-    //
+    //logout
+    func logout(){
+        do{
+            try Auth.auth().signOut()
+            self.isLoggedin = false
+        }catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+        
+    }
 }
