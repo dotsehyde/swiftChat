@@ -9,14 +9,18 @@ import SwiftUI
 
 struct MessageField: View {
     @State private var message = ""
+    @EnvironmentObject var messageViewModel: MessageViewModel
     var body: some View {
         HStack{
 //            CustomTextField(placeholder: Text("Enter your message here..."), text: $message)
             TextField("Enter your message here...",text: $message)
             Button {
                 //send message
-                print("Message sent")
-                message = ""
+                withAnimation {
+                    messageViewModel.sendMessage(text: message)
+                    message = ""
+                }
+               
             } label: {
                 Image(systemName: "paperplane.fill")
                     .foregroundColor(.white)
@@ -30,7 +34,7 @@ struct MessageField: View {
         .padding(.vertical,10)
         .background(Color("Gray"))
         .clipShape(RoundedCorner(radius: 50))
-        .padding()
+        .padding(.horizontal)
     }
 }
 

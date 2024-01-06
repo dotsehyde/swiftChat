@@ -17,16 +17,13 @@ struct swiftchatApp: App {
     }
     
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject  var messageController = MessageViewModel()
     var body: some Scene {
         WindowGroup {
-            NavigationStack{
-                if authViewModel.isLoggedin {
-                    ContentView()
-                }else{
-                    AuthView()
-                }
-            }
-            .environmentObject(authViewModel)
+       ContentView()
+                .environmentObject(authViewModel)
+                .environmentObject(messageController)
         }
+        
     }
 }

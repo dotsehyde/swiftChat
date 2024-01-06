@@ -12,4 +12,13 @@ struct Message: Identifiable, Codable, Hashable {
     var text:String
     var received:Bool
     var timestamp:Date
+    
+    static func sampleData() -> [Message]{
+        return [
+            Message(id: "1234", text: "Hello World!, I'm coding in Swift and SwiftUI", received: false, timestamp: Date()),
+            Message(id: "1234", text: "Hello World!, I'm coding in Swift and SwiftUI", received: false, timestamp: Date()),
+            Message(id: "1234", text: "Hello World!, I'm coding in Swift and SwiftUI", received: true, timestamp: Date()),
+            Message(id: "1234", text: "Hello World!, I'm coding in Swift and SwiftUI", received: true, timestamp: Date())
+        ]
+    }
 }

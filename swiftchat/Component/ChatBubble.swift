@@ -32,6 +32,10 @@ struct ChatBubble: View {
         .frame(maxWidth: .infinity, alignment: message.received ? .leading : .trailing)
         .padding(message.received ? .leading : .trailing)
         .padding(.horizontal,10)
+        .swipeActions(edge: .trailing) {
+          Image(systemName: "trash")
+            
+        }
     }
 }
 
