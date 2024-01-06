@@ -21,11 +21,12 @@ struct swiftchatApp: App {
         WindowGroup {
             NavigationStack{
                 if authViewModel.isLoggedin {
-                    ContentView(authViewModel: authViewModel)
+                    ContentView()
                 }else{
-                    AuthView(authViewModel: authViewModel)
+                    AuthView()
                 }
             }
+            .environmentObject(authViewModel)
         }
     }
 }

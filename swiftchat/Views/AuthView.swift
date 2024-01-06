@@ -15,7 +15,7 @@ struct AuthView: View {
     @State var isLogin = true
     @State private var isSecure: Bool = true
     @State var showPassword = false
-    @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         VStack{
             Image("logo").resizable()
@@ -132,6 +132,6 @@ struct AuthView: View {
 
 struct AuthView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthView(authViewModel: AuthViewModel())
+        AuthView()
     }
 }

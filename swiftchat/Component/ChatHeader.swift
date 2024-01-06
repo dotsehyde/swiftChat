@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatHeader: View {
-    @ObservedObject var authViewModel:AuthViewModel
+    @EnvironmentObject var authViewModel:AuthViewModel
     @State private var showAlert = false
     var imageUrl = URL(string: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=3322&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
     
@@ -55,7 +55,7 @@ struct ChatHeader: View {
 
 struct ChatHeader_Previews: PreviewProvider {
     static var previews: some View {
-        ChatHeader(authViewModel: AuthViewModel())
+        ChatHeader()
         
             .background(Color("Primary"))
     }

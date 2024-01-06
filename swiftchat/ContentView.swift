@@ -15,11 +15,11 @@ struct ContentView: View {
         Message(id: "1234", text: "Hello World!, I'm coding in Swift and SwiftUI", received: true, timestamp: Date())
     ]
     @StateObject private var messageController = MessageViewModel()
-    @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject private var authViewModel:AuthViewModel
     var body: some View {
         VStack {
             VStack{
-               ChatHeader(authViewModel: authViewModel)
+               ChatHeader()
                 ScrollViewReader { proxy in
                     ScrollView {
                         ForEach(messages,id: \.self) { message in
@@ -45,6 +45,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(authViewModel: AuthViewModel())
+        ContentView()
     }
 }
